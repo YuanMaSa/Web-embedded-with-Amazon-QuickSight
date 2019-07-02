@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ECV Demo</title>
+  <!-- <meta http-equiv="refresh" content="#"> -->
+  <link rel="shortcut icon" href="ecloud.png" type="image/x-icon">
+  <script src="https://unpkg.com/amazon-quicksight-embedding-sdk@1.0.3/dist/quicksight-embedding-js-sdk.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script type="text/javascript">
+    var dashboard
+
+    function onDashboardLoad(payload) {
+      console.log("Do something when the dashboard is fully loaded.");
+    }
+
+    function onError(payload) {
+      console.log("Do something when the dashboard fails loading");
+    }
+
+    function embedDashboard() {
+      var containerDiv = document.getElementById("dashboardContainer");
+      var options = {
+        url: "https://us-east-1.quicksight.aws.amazon.com/embed/7bd852d824d94e2da8dfbe7fb3b48590/dashboards/b2d3e2a0-ea5f-4e6d-bdeb-6f002aeaec11?isauthcode=true&identityprovider=quicksight&code=AYABeKVuZ9YLzGMMd2BMT0KjzcYAAAABAAdhd3Mta21zAEthcm46YXdzOmttczp1cy1lYXN0LTE6MjU5NDgwNDYyMTMyOmtleS81NGYwMjdiYy03MDJhLTQxY2YtYmViNS0xNDViOTExNzFkYzMAuAECAQB4l6pD2xhUY2WZ3LzF9ADzT04TvWztj3rAluPGmvaui90BXUOWb1EfUtm0Qtmjsga6JwAAAH4wfAYJKoZIhvcNAQcGoG8wbQIBADBoBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMwhv6iAdYDB4GD2lAIBEIA7hlaByXKrxTEqArdM813ceB2ueqEq0PG9FIMDwOqlmS216jSQ0gbWkapLP-uSgKue-2WPxB97Gek-1IYCAAAAAAwAABAAAAAAAAAAAAAAAAAA0wje6uSnWvybM0IBI7Tcn_____8AAAABAAAAAAAAAAAAAAABAAAAm9zR3ixPsAbs_wYo0iEP_b2oS-_sR9CTOKnTVMqsylGWAAenXyMwM5mNucuZo4i0hdMF_xG1s4ufhgU50ZM6gTn8WQL7BHRIjjNqsZMx2LPwd9Kn1EoWDhW6lvycI3Sf05KQH1bP9DqhncLVsoC2_jt7POwz3M8LsOsisAUfKu95eqNoRWkor5Bjzw1oVJS21BjJfIJwPavl4pPcFaP-G7o_SSJz3jwQh5AM5A%3D%3D",
+        container: containerDiv,
+        parameters: {
+          country: "United States"
+        },
+        scrolling: "no",
+        height: "700px",
+        width: "1000px"
+      };
+      dashboard = QuickSightEmbedding.embedDashboard(options);
+      dashboard.on("error", onError);
+      dashboard.on("load", onDashboardLoad);
+    }
+
+    function onCountryChange(obj) {
+      dashboard.setParameters({
+        country: obj.value
+      });
+    }
+  </script>
+  <script src="quicksight-ui.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img src="./icon.png" alt="icon" height="8%" width="8%" />
+    <a class="navbar-brand" href="#" style="margin-left:30px">Demo</a>
+  </nav>
+  <!-- <div class="container">
+  <script type='text/javascript' src='https://10ay.online.tableau.com/javascripts/api/viz_v1.js'></script>
+  <div class='tableauPlaceholder' style='width: 1000px; height: 827px;'><object class='tableauViz' width='1000' height='827' style='display:none;'>
+      <param name='host_url' value='https%3A%2F%2F10ay.online.tableau.com%2F' />
+      <param name='embed_code_version' value='3' />
+      <param name='site_root' value='&#47;t&#47;jonathandashboard' />
+      <param name='name' value='0630-new&#47;testing' />
+      <param name='tabs' value='no' />
+      <param name='toolbar' value='yes' />
+      <param name='showAppBanner' value='false' />
+      <param name='refresh' value='yes'>
+      <param name='filter' value='iframeSizedToWindow=true' /></object></div></div> -->
+  <div id="dashboardContainer"></div>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-danger" role="status" style="margin-top: 200px;">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</body>
+
+</html>
